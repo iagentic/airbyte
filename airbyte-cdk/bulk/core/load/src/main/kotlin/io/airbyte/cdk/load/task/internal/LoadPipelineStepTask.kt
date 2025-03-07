@@ -156,9 +156,8 @@ class LoadPipelineStepTask<S : AutoCloseable, K1 : WithStream, T, K2 : WithStrea
                                 .incrementAndGet() == numWorkers
                         ) {
                             outputQueue?.broadcast(PipelineEndOfStream(input.stream))
+                            batchUpdateQueue.publish(BatchEndOfStream(input.stream))
                         }
-
-                        batchUpdateQueue.publish(BatchEndOfStream(input.stream))
 
                         stateStore
                     }
